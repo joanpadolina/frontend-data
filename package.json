@@ -1,0 +1,33 @@
+{
+  "name": "frontend-data",
+  "version": "1.0.0",
+  "description": "datavisualisatie met d3 animeren en interactie",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c --watch",
+    "dev": "./public/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joanpadolina/frontend-data.git"
+  },
+  "keywords": [
+    "data",
+    "visual",
+    "d3",
+    "interactie",
+    "animatie"
+  ],
+  "author": "Joan Padolina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joanpadolina/frontend-data/issues"
+  },
+  "homepage": "https://github.com/joanpadolina/frontend-data#readme",
+  "dependencies": {
+    "d3": "^5.14.1",
+    "rollup": "^1.27.2",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  }
+}
