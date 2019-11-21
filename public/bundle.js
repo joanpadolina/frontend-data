@@ -27,7 +27,6 @@
         fetch(url + "?query=" + encodeURIComponent(query) + "&format=json") //omzetten naar json en geschikt maken voor de het ophalen uit browser
             .then(data => data.json())
             .then(json => {
-                console.log(json);
                 const resultsQuery = json.results.bindings
                     .map(result => {
 
@@ -35,7 +34,8 @@
                             category: result.type.value,
                             value: Number(result.choCount.value)
                         }
-                    });
+    				});
+    				
                 createVisual(resultsQuery);
             });
 
