@@ -8,7 +8,7 @@ export default function (){
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     
     SELECT ?type (COUNT(?cho) AS ?choCount) WHERE {
-      VALUES ?type { "Foto" "foto" "Negatief" "negatief" "Glasnegatief" "glasnegatief" "Dia" "dia" "Kleurendia" "kleurendia" "Lichtbeeld" "lichtbeeld"}
+      VALUES ?type { "Foto" "Negatief" "glasnegatief" "Dia" "kleurendia" "Lichtbeeld"}
       ?cho dc:type ?type ;
             dc:title ?title .
        FILTER langMatches(lang(?title), "ned")
