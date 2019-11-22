@@ -7,5 +7,5 @@ export default {
         format: 'iife',
         name: 'bundle',
     },
-    external: [ 'd3']
+    external: [ 'd3', 'max']
 }

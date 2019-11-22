@@ -1,6 +1,4 @@
 const url = "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-12/sparql"
-
-
 const query = `PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -21,10 +19,10 @@ SELECT ?type ?continentLabel(COUNT(?cho) AS ?choCount) WHERE {
 } GROUP BY ?type ?continentLabel
 ORDER BY DESC(?choCount)`
 
-fotoPerCategoryFetch()
+fotoData()
 
-function  fotoPerCategoryFetch() {
-    return fetch(url + "?query=" + encodeURIComponent(query) + "&format=json") //omzetten naar json en geschikt maken voor de het ophalen uit browser
+async function  fotoData() {
+    return await fetch(url + "?query=" + encodeURIComponent(query) + "&format=json") //omzetten naar json en geschikt maken voor de het ophalen uit browser
         .then(data => data.json())
         .then(json => {
              const resultsQuery = json.results.bindings
@@ -36,25 +34,30 @@ function  fotoPerCategoryFetch() {
                         value: Number(result.choCount.value)
                     }
                 })
-            return resultsQuery
-        })
-        .then(resultsQuery => {   
-            //roy csuka!!! / laurens
-                let transformed =  d3.nest()
-                .key(d => d.continent)
-                .key(d => d.category)
-                    .rollup(d => {
-                        return {
-                            fotoCategories: d3.sum(d.map(sumCategory => sumCategory.value)),
-                        }
-                    })
-                    .entries(resultsQuery);
-                console.log(transformed)
                 createVisual(resultsQuery)
-                return transformed
+            return resultsQuery
+      
         })
+        // .then(resultsQuery => {   
+        //     //roy csuka!!! / laurens
+        //         let transformed =  d3.nest()
+        //         .key(d => d.category)
+        //             // .rollup(d => {
+        //             //     return {
+        //             //         fotoCategories: d3.sum(d.map(sumCategory => sumCategory.value)),
+        //             //         continent: d.map(console.log(d))
+        //             //     }
+        //             // })
+        //             .entries(resultsQuery);
+        //             // console.log(transformed)
+        //         createVisual(transformed)
+        //         return transformed
+        // })
+ 
   
 }
+
+// stijlen binnen elke continenenten 
 
 
 // Scale ordinal van Mike Bostock met mijn eigen colorpalette
@@ -65,6 +68,11 @@ const color = colorList()
 
 
 function createVisual(results) {
+
+	const yValue = results => results.value;
+	const xValue = results => results.category;
+    const colorContinent = results => results.continent;
+    console.log(results)
 	// selecteer de svg in de html bestand
 	const svg = d3.select('svg');
 
@@ -80,7 +88,7 @@ function createVisual(results) {
     //y-as schaal
     const yScale = d3.scaleLinear()
         .range([height, 0])
-        .domain([0, 100040])
+        .domain([0, d3.max(results, yValue)])
 
 		
     //x-as schaal
@@ -92,9 +100,6 @@ function createVisual(results) {
     const makeYLines = () => d3.axisLeft()
 		.scale(yScale)
 		
-	const tip = d3.select()
-		.attr('class', 'd3-tip')
-
     // Nieuwe groep, horizontale lijn x-as tekenen
     chart.append('g')
         .attr('transform', `translate(0, ${height})`)
@@ -110,21 +115,23 @@ function createVisual(results) {
         .call(makeYLines()
             .tickSize(-width, 0, 0)
 			.tickFormat('')
-		)
-    // data aanroepen, versturen en groeperen
+        )
+        
+    // maak van de data een rechthoek genaamd rect
+
     const categoryBar = chart.selectAll()
         .data(results)
         .enter()
         .append('g')
-
+        
     categoryBar
         .append('rect')
         .attr('class', 'bar')
-        .attr('x', (g) => xScale(g.category))
-        .attr('y', (g) => yScale(g.value))
+        .attr('x', d => xScale(d.category))
+        .attr('y', d => yScale(d.value))
         .attr('height', (g) => height - yScale(g.value))
 		.attr('width', xScale.bandwidth())
-		.style('fill', d => color(d.category))
+        .style('fill', d => color(colorContinent(d)))
 
 		.on('mouseenter', function(){
 			d3.select(this)
@@ -141,14 +148,14 @@ function createVisual(results) {
                 .transition()
                 .duration(300)
                 .attr('opacity', 0.6)
-                // .attr('x', (a) => xScale(a.category) - 5)
-                // .attr('width', xScale.bandwidth() + 10)
+                .attr('x', (a) => xScale(a.category) - 5)
+                .attr('width', xScale.bandwidth() + 10)
 
-            const y = yScale(actual.value)
+        const y = yScale(actual.value)
 			
 			//toop tip voor het toevoegen van animaties
 			
-            const tooltip = d3.select("#tooltip")
+        const tooltip = d3.select("#tooltip")
             tooltip
 				.style("opacity", 1)
 
@@ -159,14 +166,13 @@ function createVisual(results) {
                     (actual.category) + (actual.value)
                 ].join(" ")) //waardes meegeven aan de tooltip
 
-			// lijn aan de bovenkant die de muis volgt
+			// lijn aan de bovenkant die de muis volgt van Emma Oudmeijer
             line = chart.append('line')
                 .attr('id', 'limit')
                 .attr('x1', 0)
                 .attr('y1', y)
                 .attr('x2', width)
 				.attr('y2', y)
-				.style('fill', 'grey')
 
         })
         //hover loslaten , geen opacity
@@ -195,12 +201,29 @@ function createVisual(results) {
         // .attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
         // .attr('y', (a) => yScale(a.value) + 40)
         // .attr('text-anchor', 'middle')
-		// .text((a) => `${a.value}`)
-		.on('mouseover', tip.show)
-		.on('mousout', tip.hide)
+        // .text((a) => `${a.value}`)
 
-    svg
-        .append('text')
+    // // hier nest ik alle continenten bij elkaar
+        const continentKey = d3.nest()
+                .key(i => i.continent)
+                .entries(results)
+    //laatste value is overbodig van het continent weggehaald
+        let newContinent = continentKey.pop() 
+
+        const newContinentValue = continentKey.map(i => i.key)
+        console.log(newContinentValue)
+        const abc = ['a', 'b','c']
+
+    let dropdown = d3.select('select')
+        .append('svg')
+            .attr("width",  100)
+            .attr("height", 40)
+        .append('g')
+
+         
+        .data(abc)
+
+    svg.append('text')  
         .attr('class', 'label')
         .attr('x', -(height / 2) - margin)
         .attr('y', margin / 2.4)
@@ -223,6 +246,6 @@ function createVisual(results) {
         .attr('y', 40)
         .attr('text-anchor', 'middle')
 		.text('A picture is worth a thousand words')
-		.style('fill', 'white')
-}
+        .style('fill', 'white')
 
+}
