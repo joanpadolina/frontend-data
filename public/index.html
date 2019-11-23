@@ -8,6 +8,7 @@
     <title>Fotos van de wereldculturen</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
     <!-- <div class="intro">
         <h1>
@@ -35,20 +36,37 @@
             the answer
         </p>
     </div> -->
-    <div class='svgDiv'>
-    <select>
-        <option value="">Azië</option>
-        <option value="">Amerika</option>
-        <option value="">Eurazië</option>
-        <option value="">Afrika</option>
-        <option value="">Oceanië</option>
-    </select>
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
-    <svg width="960" height="700"></svg>
-  <script src="../src/testLand.js"></script>
-    <!-- <script src="../src/index.js" type="module"></script> -->
-</div>
+    <div class='radio'>
+        <label class='radio-inline'>
+            <input type="radio" name="continent" value="Amerika" onclick='change(this.value)'> Amerika
+        </label>
+        <label class='radio-inline'>
+            <input type="radio" name="continent" value="Azië" onclick='change(this.value)'> Azië
+        </label>
+        <label class='radio-inline'>
+            <input type="radio" name="continent" value="Afrika" onclick='change(this.value)' checked> Afrika
+        </label>
+        <label class='radio-inline'>
+            <input type="radio" name="continent" value="Oceanië" onclick='change(this.value)' checked> Oceanië
+        </label>
+        <label class='radio-inline'>
+            <input type="radio" name="continent" value="Eurazië" onclick='change(this.value)' checked> Eurazië
+        </label>
+        <div class='svgDiv'>
+
+            <select>
+                <option value="">Azië</option>
+                <option value="">Amerika</option>
+                <option value="">Eurazië</option>
+                <option value="">Afrika</option>
+                <option value="">Oceanië</option>
+            </select>
+            <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+            <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
+            <svg width="960" height="700"></svg>
+            <script src="../src/testLand.js"></script>
+            <!-- <script src="../src/index.js" type="module"></script> -->
+        </div>
 </body>
 
 </html>
