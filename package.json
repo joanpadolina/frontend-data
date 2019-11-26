@@ -2,10 +2,10 @@
   "name": "frontend-data",
   "version": "1.0.0",
   "description": "datavisualisatie met d3 animeren en interactie",
-  "main": "index.js",
+  "main": "serverdown.js",
   "scripts": {
-    "build": "rollup -c",
     "start": "rollup -c --watch",
+    "build": "rollup -c",
     "dev": "./public/bundle.js"
   },
   "repository": {
@@ -27,7 +27,6 @@
   "homepage": "https://github.com/joanpadolina/frontend-data#readme",
   "dependencies": {
     "d3": "^5.14.1",
-    "d3-tip": "^0.9.1",
     "rollup": "^1.27.2",
     "rollup-plugin-node-resolve": "^5.2.0"
   }

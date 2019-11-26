@@ -302,6 +302,7 @@ let z = d3.scaleOrdinal()
     .range(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"])
 
 // https://bl.ocks.org/ADJMLyon/db038850d5890d6aff43c145591c6f90
+// nesting my data
 let nestedCategory = d3.nest()
     .key(d => d.category)
     .key(d => d.continent)
@@ -328,20 +329,14 @@ nestedCategory.forEach(i => {
 
 })
 
-// function addAll(data) {
-//     data.forEach(d => {
-//         console.log(d.values.map(d => {
-//             console.log(d)
-//         }))
-//     })
-// }
-
-// console.log(addAll(nestedCategory))
-// console.log(nestedCategory)
-
 let continentList = nestedCategory[0].values.map(d => d.continent)
 let categoryList = nestedCategory.map(d => d.category)
 
+// tool tip
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 x0.domain(categoryList)
 x1.domain(continentList).rangeRound([0, x0.bandwidth()])
@@ -363,6 +358,7 @@ const category = g.append('g')
         return `translate(${x0(d.category)},0)`
     })
 
+
 const rect = category.selectAll('rect')
     .data(d => d.values)
     .enter()
@@ -370,6 +366,23 @@ const rect = category.selectAll('rect')
     .attr('y', height)
     .attr('width', x0.bandwidth())
     .attr('height', 0)
+    .on("mouseover", function (d) {
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(`${d.continent} <br> ${d.totalValue}`)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 20) + "px");
+    })
+    .on("mouseout", function (d) {
+        div.transition()
+            .duration(500)
+            .style("opacity", 0);
+    });
+
+// tooltip 
+// https://bl.ocks.org/d3noob/257c360b3650b9f0a52dd8257d7a2d73
+
 
 // console.log(nestedCategory)
 
@@ -384,6 +397,7 @@ let groupBar = () => {
         .attr('witdh', x0.bandwidth())
         .attr('height', d => height - y(d.totalValue))
         .attr('fill', d => z(d.continent))
+    
 
 }
 let drawLegend = (data) => {
@@ -517,7 +531,7 @@ dropdown.selectAll('continent')
 
 function updateBar(data) {
     const filterContinent = console.dir(data)
-    console.log(filterContinent)
+    // console.log(filterContinent)
 }
 dropdown.on('change', function changeButton() {
     // find which unit was selected from the dropdown
@@ -528,18 +542,6 @@ dropdown.on('change', function changeButton() {
 
 })
 updateBar(nestedCategory)
-
-
-
-tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; })
-
-
-
-
-
-
-
-
 
 
 

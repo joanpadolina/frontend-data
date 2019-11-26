@@ -1,27 +1,30 @@
-
 body {
-    font-family: roboto;
-    margin: 0;
-    padding: 0;
-    /* overflow: hidden; */
-    background: radial-gradient(circle, rgba(78,82,88,1) 0%, rgba(22,31,41,1) 100%);
+  font-family: roboto;
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; */
+  background: radial-gradient(circle, rgba(78, 82, 88, 1) 0%, rgba(22, 31, 41, 1) 100%);
 
-  }
-  
-  line {
-    stroke:#90c8e2;
-    stroke-width: 2;
 }
 
-  
-  .tick line {
-    stroke-width: .1px;
-  } 
-h1{
+line {
+  stroke: #90c8e2;
+  stroke-width: 2;
+}
+
+
+.tick line {
+  stroke-width: .1px;
+}
+
+h1 {
   text-align: center;
-  color:white;
+  color: white;
 }
-.intro, .guess, .guess-results{
+
+.intro,
+.guess,
+.guess-results {
   height: 100vh;
   text-align: center;
   position: relative;
@@ -30,31 +33,14 @@ h1{
   opacity: .3;
 }
 
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
+div.tooltip {
   position: absolute;
   text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
+  width: 5em;
+  height: 2.5em;
+  padding: .2em;
+  font: .7em Roboto;
+  background: lightsteelblue;
+  border-radius: .1em;
+  pointer-events: none;
 }
