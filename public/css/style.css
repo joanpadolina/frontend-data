@@ -51,3 +51,10 @@ div.tooltip {
 hr {
   border: dashed .05em white
 }
+svg{
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  align-content: center;
+  top: 10em;
+}
