@@ -36,11 +36,18 @@ h1 {
 div.tooltip {
   position: absolute;
   text-align: center;
-  width: 5em;
-  height: 2.5em;
+  width: 5.8em;
+  height: 4em;
   padding: .2em;
-  font: .7em Roboto;
-  background: lightsteelblue;
-  border-radius: .1em;
+  font-size: .7em;
+  background: linear-gradient(to bottom, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);  
+  border-radius: .14em;
   pointer-events: none;
+  color: #320D6D;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.45);
+  
+}
+
+hr {
+  border: dashed .05em white
 }

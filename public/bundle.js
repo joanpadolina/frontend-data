@@ -330,10 +330,10 @@
 
     });
 
-    let continentList = nestedCategory[0].values.map(d => d.continent);
+    let continentList = nestedCategory[0].values.map(d => d.continent).splice(0, 5); // laatste van de continent verwijderd ivm spelling.
     let categoryList = nestedCategory.map(d => d.category);
 
-    // tool tip
+    // tool tip in de html plaatsen
 
     var div = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -357,32 +357,18 @@
         .append('g')
         .attr('transform', d => {
             return `translate(${x0(d.category)},0)`
-        });
+        })
+        .attr('class', 'category-group');
 
 
     const rect = category.selectAll('rect')
-        .data(d => d.values)
+        .data(d => (d.values))
         .enter()
         .append('rect')
+        .attr('class', 'bar')
         .attr('y', height)
         .attr('width', x0.bandwidth())
-        .attr('height', 0)
-        .on("mouseover", function (d) {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-            div.html(`${d.continent} <br> ${d.totalValue}`)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 20) + "px");
-        })
-        .on("mouseout", function (d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
-
-    // tooltip 
-    // https://bl.ocks.org/d3noob/257c360b3650b9f0a52dd8257d7a2d73
+        .attr('height', 0);
 
 
     // console.log(nestedCategory)
@@ -398,10 +384,11 @@
             .attr('witdh', x0.bandwidth())
             .attr('height', d => height - y(d.totalValue))
             .attr('fill', d => z(d.continent));
-        
+
 
     };
     let drawLegend = (data) => {
+
         var legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
@@ -429,11 +416,11 @@
             });
     };
 
+
     //https://stackoverflow.com/questions/41549713/d3-js-i-want-to-change-the-data-value-to-a-percentage
     //de Y-ass veranderen naar een percentage
-
-    let leftAxis = d3.axisLeft(y)
-        .tickFormat(d => Math.round(d * 100 / d3.max(y.domain())) + "%");
+    // let leftAxis = d3.axisLeft(y)
+    //     .tickFormat(d => Math.round(d * 100 / d3.max(y.domain())) + "%")
 
     let drawAxis = () => {
         g.append("g")
@@ -454,15 +441,18 @@
             .text("aantal verzameld");
     };
 
+
     groupBar();
     drawLegend(continentList);
     drawAxis();
 
+
     d3.selectAll("input").on("change", change);
+
 
     let timeout = setTimeout(() => {
         d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-    }, 2000);
+    }, 400);
 
     function change() {
         clearTimeout(timeout);
@@ -510,7 +500,7 @@
             .attr("width", x0.bandwidth());
     }
 
-
+    // hier maak ik een dropdown keuze menu van de continenten die in de database staan
     let dropdown = d3.select('body')
         .append('select');
 
@@ -521,35 +511,38 @@
         .text(d => d)
         .attr('value', d => d);
 
+    category.selectAll('rect')
+        .on("mouseover", toolOn)
+        .on("mouseout", toolOf);
 
 
-    // console.log(nestedCategory)
 
-    function updateBar(data) {
-        const filterContinent = console.dir(data);
-        // console.log(filterContinent)
+    // function voor de tooltip
+    // https://bl.ocks.org/d3noob/257c360b3650b9f0a52dd8257d7a2d73
+
+
+    function toolOn(d) {
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(`${d.continent} <br><hr> ${d.totalValue}`)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 20) + "px");
+        d3.select(this)
+            .transition()
+            .duration(300)
+            .attr('fill', 'orange');
     }
-    dropdown.on('change', function changeButton() {
-        // find which unit was selected from the dropdown
-        console.dir(this.value);
-        var selectedUnit = d3.select(this.value);
-        // run update with selected unit
-        updateBar(selectedUnit);
 
-    });
-    updateBar(nestedCategory);
-
-
-
-
-
-
-
-
-
-
-
-
+    function toolOf(d) {
+        div.transition()
+            .duration(500)
+            .style("opacity", 0);
+        d3.select(this)
+            .transition()
+            .duration(500)
+            .attr('fill', d => z(d.continent));
+    }
 
     // console.log(data)
     //select all bars on the graph, take them out, and exit the previous data set. 
