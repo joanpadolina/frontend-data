@@ -110,17 +110,18 @@ function updateContinent(data) {
 // 	}
 // }
 
-     const nestedCategory = d3.nest()
-        .key(d => d.category)
-        .entries(data)
-    const nestedContinent = d3.nest()
-        .key(d => d.continent)
-        .entries(data)
 
-    console.log(nestedCategory)
-    console.log(nestedContinent)
+
+    // console.log(dataNest)
+    // const nestedContinent = d3.nest()
+    //     .key(d => d.continent)
+    //     .entries(data)
+
+    // console.log(nestedCategory)
+    // console.log(nestedContinent)
 
     console.log(data)
+
     const yValue = data.map(d => d.value)
     const xValue = data.map(d => d.category)
     const valueContinent = data.map(d => d.continent)
@@ -134,7 +135,7 @@ function updateContinent(data) {
         bottom: 95,
         left: 50
     };
-    var width = 1000;
+    var width = 900;
     var height = 600;
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
@@ -160,6 +161,17 @@ function updateContinent(data) {
     //get the width of each bar 
     var barWidth = width / data.length;
     const chart = d3.select('svg')
+
+    // const nestedCategory = d3.nest()
+    //     .key(d => d.category)
+    //     .entries(data)
+
+    // console.log(nestedCategory)
+    // nestedCategory = d3.stack()
+    //     .y(d => d.value)
+    //     .values(d => d.category)
+
+
     //select all bars on the graph, take them out, and exit the previous data set. 
     //then you can add/enter the new data set
     var bars = chart.selectAll(".bar")
@@ -170,10 +182,7 @@ function updateContinent(data) {
     bars.enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", function (d, i) {
-            // console.log(i)
-            return i * barWidth + 1 // dit geeft de aantaal arrays terug en plaatst het op de xas
-        })
+        .attr("x", d => xScale(d.category)) // dit geeft de aantaal arrays terug en plaatst het op de xas
         .attr("y", function (d) {
             return yScale(d.value);
         })
@@ -182,13 +191,7 @@ function updateContinent(data) {
         })
         .attr("width", barWidth - 1)
         .attr('fill', d => color(colorContinent(d)))
-    // .attr("fill", function(d){ 
-    // 	if(d.continent === "Azië"){
-    // 		return "rgb(251,180,174)";
-    // 	}else{
-    // 		return "rgb(179,205,227)";
-    // 	}
-    // });
+
     var xAxis = d3.axisBottom(xScale);
     var yAxis = d3.axisLeft(yScale);
     //left axis
@@ -197,6 +200,8 @@ function updateContinent(data) {
     chart.append("g")
         .attr("class", "y axis")
         .call(yAxis)
+        .selectAll('text')
+        
 
     //bottom axis
     chart.append("g")

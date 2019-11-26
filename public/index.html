@@ -37,7 +37,11 @@
         </p>
     </div> -->
     <div class='radio'>
-        <label class='radio-inline'>
+            <form>
+                    <label><input type="radio" name="mode" value="grouped" checked> Grouped</label>
+                    <label><input type="radio" name="mode" value="stacked"> Stacked</label>
+                  </form>
+        <!-- <label class='radio-inline'>
             <input type="radio" name="continent" value="Amerika" onclick='change(this.value)'> Amerika
         </label>
         <label class='radio-inline'>
@@ -51,20 +55,15 @@
         </label>
         <label class='radio-inline'>
             <input type="radio" name="continent" value="Eurazië" onclick='change(this.value)' checked> Eurazië
-        </label>
+        </label> -->
         <div class='svgDiv'>
-
-            <select>
-                <option value="">Azië</option>
-                <option value="">Amerika</option>
-                <option value="">Eurazië</option>
-                <option value="">Afrika</option>
-                <option value="">Oceanië</option>
-            </select>
             <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
             <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
-            <svg width="960" height="700"></svg>
-            <script src="../src/testLand.js"></script>
+            <svg width="960" height="500"></svg>
+            <!-- <script src="../src/testLand.js" type="module"></script> -->
+            <!-- <script src="../src/myBarChar.js" type="module"></script> -->
+            <script src="../src/serverdown.js" type="module"></script>
+
             <!-- <script src="../src/index.js" type="module"></script> -->
         </div>
 </body>
