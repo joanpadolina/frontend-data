@@ -267,13 +267,13 @@
     function colorList() {
         return d3.scaleOrdinal(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"])
     }
-    const color = colorList();
+    let color = colorList();
 
 
-    const yValue = data.map(d => d.value);
-    const xValue = data.map(d => d.category);
+    let yValue = data.map(d => d.value);
+    let xValue = data.map(d => d.category);
 
-    const svg = d3.select("svg"),
+    let svg = d3.select("svg"),
         margin = {
             top: 20,
             right: 50,
@@ -297,6 +297,7 @@
 
     let z = d3.scaleOrdinal()
         .range(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"]);
+
 
     // https://bl.ocks.org/ADJMLyon/db038850d5890d6aff43c145591c6f90
     // nesting my data
@@ -330,6 +331,9 @@
     let categoryList = nestedCategory.map(d => d.category);
 
 
+    // console.log(nestedCategory)
+
+
     // hier geef ik de x en y as hun eigen waardes
     x0.domain(categoryList);
     x1.domain(continentList).rangeRound([0, x0.bandwidth()]);
@@ -339,10 +343,11 @@
         })
     })]);
 
+    // z was de kleurenscheme die ik gemaakt heb voor de continenten
     z.domain(continentList);
 
 
-    const category = g.append('g')
+    let category = g.append('g')
         .selectAll('g')
         .data(nestedCategory)
         .enter()
@@ -352,7 +357,7 @@
         });
 
     // de rectangles worden hier gemaakt
-    const rect = category.selectAll('rect')
+    let rect = category.selectAll('rect')
         .data(d => (d.values))
         .enter()
         .append('rect')
@@ -360,6 +365,7 @@
         .attr('y', height)
         .attr('width', x0.bandwidth())
         .attr('height', 0);
+    rect.exit().remove;
 
     // de chart begint met een groep per category
     let groupBar = () => {
@@ -368,13 +374,31 @@
             .delay((d, i) => {
                 return i * 10;
             })
+            .attr('class', 'group-bar')
             .attr('x', d => x1(d.continent))
             .attr('y', (d) => y((d.totalValue)))
             .attr('witdh', x0.bandwidth())
             .attr('height', d => height - y(d.totalValue))
             .attr('fill', d => z(d.continent));
+            rect.exit().remove();
     };
 
+    // let singleContinet = () => {
+    //     let newBar = d3.selectAll('rect')
+
+    //     newBar.transition()
+    //         .duration(500)
+    //         .delay((d, i) => {
+    //             return i * 10;
+    //         })
+    //         .attr('class', 'single-bar')
+    //         .attr('x', d => x1(d.continent))
+    //         .attr('y', (d) => y((d.totalValue)))
+    //         .attr('witdh', x0.bandwidth())
+    //         .attr('height', d => height - y(d.totalValue))
+    //         .attr('fill', d => z(d.continent))
+    // }
+    // singleContinet()
     // legenda uit de data
     let continentLegend = (data) => {
         var legend = g.append("g")
@@ -451,7 +475,6 @@
         clearTimeout(timeout);
         if (this.value === 'grouped') transitionGrouped();
         else transitionStacked();
-        console.log(this.value);
     }
 
     function transitionGrouped() {
@@ -495,6 +518,7 @@
     }
 
     // hier maak ik een dropdown keuze menu van de continenten die in de database staan
+
     let dropdown = d3.select('body')
         .append('select')
         .attr('id', 'filter');
@@ -509,44 +533,46 @@
 
 
 
-
     // trying to update the data
-    function updateBars() {
-        console.log(data);
 
+    function dataFil() {
+        // console.log(this)
+        // console.log(nestedCategory)
+        // let updateData = d3.select(this).property('value')
+        // let continentValue = nestedCategory.map(d => {
+        //     return d.values
+        // })
+        // let onlyContinent = continentValue[0].map((d, i) => d.continent)
+        // console.log(onlyContinent)
+        
+        const selectedCountry = this.value;
+        
+        console.log(selectedCountry);
         x1.domain(d3.extent(data, d => d.category));
         y.domain([0, d3.max(data, d => d.totalValue)]);
-        let newDataGroup = d3.group( data => data.continent);
-        let selectNew = d3.selectAll('.bar').data(data);
+
+        // console.log(continentValue.filter(row => console.log(row)))
+        console.log(data.filter(row => row.continent === selectedCountry));
+        let selectNew = d3.selectAll('rect')
+            .data(data.filter(row => row.continent === selectedCountry));
 
         selectNew
             .enter()
-            .data(newDataGroup)
             .attr('class', 'newBar')
-            .attr('x', (d,i) => x1(category[i]))
-            .attr('width', x1.rangeBand())
-            .attr('y', (d, i) => y(d))
-            .attr('height', (d, i) => height -y(d))
-            .attr('height', d => d + 'px');
-
-        selectNew.exit().remove();
-
-        updateBars();
+            .attr('x', d => x1(xValue(d)))
+            .attr('width', d => x1.bandwidth())
+            .attr('y', d => y(yValue(d)))
+                .attr('height', d => innerHeight - y(yValue(d)))
+               .style('fill', 'black')
+               .exit().remove();
+        // .attr('x', (d, i) => x1(category[i]))
+        // .attr('width', x1.rangeBand())
+        // .attr('y', (d, i) => y(d))
+        // .attr('height', (d, i) => height - y(d))
+        // .attr('height', d => d + 'px')
+        // .attr('fill', 'red')
     }
 
-    function dataFil(nestedCategory) {
-        console.log(this.value);
-        console.log(data);
-        let updateData = d3.select(this).property('value');
-            newHeart = nestedCategory[updateBars];
-
-        updateBars(newHeart);
-        // if (this.value === 'value') transitionGrouped();
-        // else transitionStacked();
-        // let newD = d3.select('#filter').property('value')
-        // return d.continent === newD
-    }
-    // let initialData = nestedCategory[continent[0]]
 
 
     d3.selectAll('#filter').on('change', dataFil);
@@ -575,6 +601,7 @@
         d3.select(this)
             .transition()
             .duration(300)
+            .attr('width', x1.bandwidth() + 3)
             .attr('fill', 'orange');
     }
 
@@ -586,7 +613,8 @@
         d3.select(this)
             .transition()
             .duration(500)
-            .attr('fill', d => z(d.continent));
+            .attr('fill', d => z(d.continent))
+            .attr('width', x1.bandwidth());
     }
 
 
