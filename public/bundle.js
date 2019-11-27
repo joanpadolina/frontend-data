@@ -284,20 +284,6 @@
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // x en y as wordt gemaakt
-    let x0 = d3.scaleBand()
-        .rangeRound([0, width])
-        .paddingInner(0.2);
-
-    let x1 = d3.scaleBand()
-        .padding(0.05);
-
-    let y = d3.scaleLinear()
-        .rangeRound([height, 0]);
-
-    let z = d3.scaleOrdinal()
-        .range(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"]);
-
 
     // https://bl.ocks.org/ADJMLyon/db038850d5890d6aff43c145591c6f90
     // nesting my data
@@ -326,79 +312,241 @@
 
     });
 
+    console.log(nestedCategory);
+
+
     // geeft een naam voor bepaalde waardes om dit makkelijker te achterhalen
     let continentList = nestedCategory[0].values.map(d => d.continent).splice(0, 5); // laatste van de continent verwijderd ivm spelling.
     let categoryList = nestedCategory.map(d => d.category);
 
+    console.log(categoryList);
 
-    // console.log(nestedCategory)
+    // x en y as wordt gemaakt
+    let x0 = d3.scaleBand()
+        .domain(categoryList)
+        .rangeRound([0, width])
+        .paddingInner(0.2);
 
+    let x1 = d3.scaleBand()
+        .domain(continentList).rangeRound([0, x0.bandwidth()])
+        .padding(0.05);
 
-    // hier geef ik de x en y as hun eigen waardes
-    x0.domain(categoryList);
-    x1.domain(continentList).rangeRound([0, x0.bandwidth()]);
-    y.domain([0, d3.max(nestedCategory, d => {
-        return d3.max(d.values, el => {
-            return el.totalValue
-        })
-    })]);
+    let y = d3.scaleLinear()
+        .domain([0, d3.max(nestedCategory, d => {
+            return d3.max(d.values, el => {
+                return el.totalValue
+            })
+        })])
+        .rangeRound([height, 0]);
 
-    // z was de kleurenscheme die ik gemaakt heb voor de continenten
-    z.domain(continentList);
+    let z = d3.scaleOrdinal()
+        .domain(continentList)
+        .range(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"]);
 
 
     let category = g.append('g')
         .selectAll('g')
-        .data(nestedCategory)
+        .data(nestedCategory);
+
+    let categoryEnter = category
         .enter()
         .append('g')
         .attr('transform', d => {
             return `translate(${x0(d.category)},0)`
-        });
+        })
+        .attr('class', 'category');
 
-    // de rectangles worden hier gemaakt
-    let rect = category.selectAll('rect')
-        .data(d => (d.values))
+    let rect = categoryEnter.selectAll('rect')
+        .data(d => d.values);
+
+    let rectEnter = rect
         .enter()
         .append('rect')
         .attr('class', 'bar')
         .attr('y', height)
         .attr('width', x0.bandwidth())
         .attr('height', 0);
-    rect.exit().remove;
 
-    // de chart begint met een groep per category
-    let groupBar = () => {
-        rect.transition()
-            .duration(500)
-            .delay((d, i) => {
-                return i * 10;
-            })
-            .attr('class', 'group-bar')
-            .attr('x', d => x1(d.continent))
-            .attr('y', (d) => y((d.totalValue)))
-            .attr('witdh', x0.bandwidth())
-            .attr('height', d => height - y(d.totalValue))
-            .attr('fill', d => z(d.continent));
-            rect.exit().remove();
-    };
+    // makeViz();
 
-    // let singleContinet = () => {
-    //     let newBar = d3.selectAll('rect')
+    // function makeViz() {
 
-    //     newBar.transition()
-    //         .duration(500)
-    //         .delay((d, i) => {
-    //             return i * 10;
+    //     if(this) {
+    //         nestedCategory = nestedCategory.map(row => row.values.filter(d => d.continent === this.value));
+    //     }
+        
+
+    //     // let test = nestedCategory.map(row => row.values.filter(d => d.continent === selectedCountry));
+
+
+    //     let category = g.append('g')
+    //         .selectAll('g')
+    //         .data(nestedCategory)
+
+    //     let categoryEnter = category
+    //         .enter()
+    //         .append('g')
+    //         .attr('transform', d => {
+    //             return `translate(${x0(d.category)},0)`
     //         })
-    //         .attr('class', 'single-bar')
-    //         .attr('x', d => x1(d.continent))
-    //         .attr('y', (d) => y((d.totalValue)))
-    //         .attr('witdh', x0.bandwidth())
-    //         .attr('height', d => height - y(d.totalValue))
-    //         .attr('fill', d => z(d.continent))
+    //         .attr('class', 'category')
+        
+            
+    //     let rect = categoryEnter.selectAll('rect')
+    //         .data(d => d.values)
+
+    //     let rectEnter = rect
+    //         .enter()
+    //         .append('rect')
+    //         .attr('class', 'bar')
+    //         .attr('y', height)
+    //         .attr('width', x0.bandwidth())
+    //         .attr('height', 0)
+    //         // .merge(rect)
+
+    //     rect.attr('y', height)
+    //     .attr('width', x0.bandwidth())
+    //     .attr('height', 0)
+    //     rect.exit().remove();
+
+    //     category.attr('transform', d => {
+    //         return `translate(${x0(d.category)},0)`
+    //     })
+    //     category.exit().remove();
+
+    //     // de chart begint met een groep per category
+    //     let groupBar = () => {
+    //         rectEnter.transition()
+    //             .duration(500)
+    //             .delay((d, i) => {
+    //                 return i * 10;
+    //             })
+    //             .attr('class', 'group-bar')
+    //             .attr('x', d => x1(d.continent))
+    //             .attr('y', (d) => y(d.totalValue))
+    //             .attr('witdh', x0.bandwidth())
+    //             .attr('height', d => height - y(d.totalValue))
+    //             .attr('fill', d => z(d.continent))
+    //     }
+
+    //     categoryEnter.selectAll('rect')
+    //         .on('mouseover', toolOn)
+    //         .on('mouseout', toolOf)
+
+    //     function transitionGrouped() {
+
+    //         rectEnter.transition()
+    //             .duration(500)
+    //             .delay((d, i) => {
+    //                 return i * 10;
+    //             })
+    //             .attr('x', d => {
+    //                 return x1(d.continent);
+    //             })
+    //             .attr('width', x1.bandwidth())
+    //             .transition()
+    //             .attr('y', d => {
+    //                 return y(d.totalValue);
+    //             })
+    //             .attr('height', d => {
+    //                 return height - y(d.totalValue);
+    //             });
+    //     }
+
+    //     function transitionStacked() {
+
+    //         rectEnter.transition()
+    //             .duration(500)
+    //             .delay((d, i) => {
+    //                 return i * 10;
+    //             })
+    //             .attr('y', d => {
+    //                 return y(d.totalValue);
+    //             })
+    //             .attr('height', d => {
+    //                 return height - y(d.totalValue);
+    //             })
+    //             .transition()
+    //             .attr('x', d => {
+    //                 return x0(d.continent);
+    //             })
+    //             .attr('width', x0.bandwidth());
+    //     }
+
+    //     function change() {
+    //         clearTimeout(timeout);
+    //         if (this.value === 'grouped') transitionGrouped();
+    //         else transitionStacked();
+    //     }
+
+    //     d3.selectAll('input').on('change', change);
+
+    //     let timeout = setTimeout(() => {
+    //         d3.select('input[value=\'grouped\']').property('checked', true).each(change);
+    //     }, 400);
+
     // }
-    // singleContinet()
+
+    // hier maak ik een dropdown keuze menu van de continenten die in de database staan
+
+
+    let dropdown = d3.select('body')
+    .append('select')
+    .attr('id', 'filter');
+
+    dropdown
+    .selectAll('option')
+    .data(continentList)
+    .enter()
+    .append('option')
+    .text(d => d)
+    .attr('value', d => d);
+
+    // d3.select('#filter').on('change', makeViz);
+
+    // trying to update the data
+
+    function dataFil() {
+
+
+
+        let x1 = d3.scaleBand()
+            .domain(data).rangeRound([0, x0.bandwidth()])
+            .padding(0.05);
+
+        const selectedCountry = this.value;
+
+        console.log(selectedCountry);
+        let test = nestedCategory.map(row => row.values.filter(d => d.continent === selectedCountry));
+        let newTest = test.flat();
+        console.log(newTest);
+        // console.log(nestedCategory.filter(row => row))//row.continent === selectedCountry))
+
+        //chazz
+        // let newSelect = svg.select('g').selectAll('.category').selectAll('rect')
+        //     .data(test)
+        // console.log(newSelect)
+        // newSelect
+        //     .attr('x', d => x1(d[0].continent))
+        //     .attr('width', d => x1.bandwidth())
+        //     .attr('y', d => y(d[0].totalValue))
+        //     .attr('height', d => height - y(d[0].totalValue))
+        //     .style('fill', 'black')
+
+        let newSelect = svg.select('g').selectAll('.category')
+            .data(newTest)
+            .attr('class', 'newBar')
+            .attr('x', d => x1(d.continent))
+            .attr('y', d => y(d.totalValue))
+            .attr('width', x0.bandwidth())
+            .attr('height', 0)
+            .style('fill', 'red');
+
+        newSelect.exit().remove();
+    }
+
+    d3.selectAll('#filter').on('change', dataFil);
+
     // legenda uit de data
     let continentLegend = (data) => {
         var legend = g.append("g")
@@ -457,7 +605,8 @@
     };
 
     // aanroepen van de functies
-    groupBar();
+
+    // groupBar()
     continentLegend(continentList);
     drawAxis();
 
@@ -479,7 +628,7 @@
 
     function transitionGrouped() {
 
-        rect.transition()
+        rectEnter.transition()
             .duration(500)
             .delay((d, i) => {
                 return i * 10;
@@ -499,7 +648,7 @@
 
     function transitionStacked() {
 
-        rect.transition()
+        rectEnter.transition()
             .duration(500)
             .delay((d, i) => {
                 return i * 10;
@@ -517,66 +666,8 @@
             .attr('width', x0.bandwidth());
     }
 
-    // hier maak ik een dropdown keuze menu van de continenten die in de database staan
 
-    let dropdown = d3.select('body')
-        .append('select')
-        .attr('id', 'filter');
-
-    dropdown
-        .selectAll('option')
-        .data(continentList)
-        .enter()
-        .append('option')
-        .text(d => d)
-        .attr('value', d => d);
-
-
-
-    // trying to update the data
-
-    function dataFil() {
-        // console.log(this)
-        // console.log(nestedCategory)
-        // let updateData = d3.select(this).property('value')
-        // let continentValue = nestedCategory.map(d => {
-        //     return d.values
-        // })
-        // let onlyContinent = continentValue[0].map((d, i) => d.continent)
-        // console.log(onlyContinent)
-        
-        const selectedCountry = this.value;
-        
-        console.log(selectedCountry);
-        x1.domain(d3.extent(data, d => d.category));
-        y.domain([0, d3.max(data, d => d.totalValue)]);
-
-        // console.log(continentValue.filter(row => console.log(row)))
-        console.log(data.filter(row => row.continent === selectedCountry));
-        let selectNew = d3.selectAll('rect')
-            .data(data.filter(row => row.continent === selectedCountry));
-
-        selectNew
-            .enter()
-            .attr('class', 'newBar')
-            .attr('x', d => x1(xValue(d)))
-            .attr('width', d => x1.bandwidth())
-            .attr('y', d => y(yValue(d)))
-                .attr('height', d => innerHeight - y(yValue(d)))
-               .style('fill', 'black')
-               .exit().remove();
-        // .attr('x', (d, i) => x1(category[i]))
-        // .attr('width', x1.rangeBand())
-        // .attr('y', (d, i) => y(d))
-        // .attr('height', (d, i) => height - y(d))
-        // .attr('height', d => d + 'px')
-        // .attr('fill', 'red')
-    }
-
-
-
-    d3.selectAll('#filter').on('change', dataFil);
-
+    // console.log(data)
 
 
     // tool tip in de html plaatsen
@@ -585,8 +676,8 @@
         .style('opacity', 0);
 
 
-    //tooltip activeren
-    category.selectAll('rect')
+    // tooltip activeren
+    categoryEnter.selectAll('rect')
         .on('mouseover', toolOn)
         .on('mouseout', toolOf);
 
