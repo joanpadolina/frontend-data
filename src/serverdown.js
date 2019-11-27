@@ -316,8 +316,6 @@ console.log(nestedCategory)
 let continentList = nestedCategory[0].values.map(d => d.continent).splice(0, 5) // laatste van de continent verwijderd ivm spelling.
 let categoryList = nestedCategory.map(d => d.category)
 
-console.log(categoryList)
-
 // x en y as wordt gemaakt
 let x0 = d3.scaleBand()
     .domain(categoryList)
@@ -327,6 +325,7 @@ let x0 = d3.scaleBand()
 let x1 = d3.scaleBand()
     .domain(continentList).rangeRound([0, x0.bandwidth()])
     .padding(0.05);
+
 
 let y = d3.scaleLinear()
     .domain([0, d3.max(nestedCategory, d => {
@@ -363,7 +362,7 @@ let rectEnter = rect
     .attr('y', height)
     .attr('width', x0.bandwidth())
     .attr('height', 0)
-    // .merge(rect)
+// .merge(rect)
 
 
 // de chart begint met een groep per category
@@ -381,6 +380,35 @@ let groupBar = () => {
         .attr('fill', d => z(d.continentList))
 }
 
+// let singleBar = () => {
+//     // console.log(selectedCountry)
+//     let test = nestedCategory.map(row => row.values.filter(d => d.continent === 'Afrika'));
+//     let newTest = test.flat()
+//     console.log(newTest)
+
+//     let x1 = d3.scaleBand()
+//     .domain(newTest).rangeRound([0, x0.bandwidth()])
+//     .padding(0.05);
+
+//     // const selectedCountry = this.value
+
+//     let singleRect = d3.select('g').selectAll('.category').append('rect').data(newTest)
+    
+//     singleRect.transition()
+//         .duration(500)
+//         .delay((d, i) => {
+//             return i * 10;
+//         })
+//         .attr('class', 'single')
+//         .attr('x', d => x1(d.continent))
+//         .attr('y', (d) => y(d.totalValue))
+//         .attr('witdh', x0.bandwidth())
+//         .attr('height', d => height - y(d.totalValue))
+//         .attr('fill', d => z(d.continentList))
+// }
+// singleBar()
+
+
 // makeViz();
 
 // function makeViz() {
@@ -388,7 +416,7 @@ let groupBar = () => {
 //     if(this) {
 //         nestedCategory = nestedCategory.map(row => row.values.filter(d => d.continent === this.value));
 //     }
-    
+
 
 //     // let test = nestedCategory.map(row => row.values.filter(d => d.continent === selectedCountry));
 
@@ -404,8 +432,8 @@ let groupBar = () => {
 //             return `translate(${x0(d.category)},0)`
 //         })
 //         .attr('class', 'category')
-    
-        
+
+
 //     let rect = categoryEnter.selectAll('rect')
 //         .data(d => d.values)
 
@@ -505,16 +533,16 @@ let groupBar = () => {
 
 
 let dropdown = d3.select('body')
-.append('select')
-.attr('id', 'filter')
+    .append('select')
+    .attr('id', 'filter')
 
 dropdown
-.selectAll('option')
-.data(continentList)
-.enter()
-.append('option')
-.text(d => d)
-.attr('value', d => d)
+    .selectAll('option')
+    .data(continentList)
+    .enter()
+    .append('option')
+    .text(d => d)
+    .attr('value', d => d)
 
 // d3.select('#filter').on('change', makeViz);
 
@@ -532,14 +560,14 @@ function dataFil() {
 
     function prettyfyArray(array) {
         return array.map(item => {
-          return {
-            id: item.id && item.id.value,
-            parentId: item.parentId && item.parentId.value,
-            catid: item.catid && item.catid.value,
-            size: item.size && item.size.value
-          }
+            return {
+                id: item.id && item.id.value,
+                parentId: item.parentId && item.parentId.value,
+                catid: item.catid && item.catid.value,
+                size: item.size && item.size.value
+            }
         })
-      }
+    }
 
 
 
@@ -560,27 +588,24 @@ function dataFil() {
     let test = nestedCategory.map(row => row.values.filter(d => d.continent === selectedCountry));
     let newTest = test.flat()
     console.log(newTest)
-    // console.log(nestedCategory.filter(row => row))//row.continent === selectedCountry))
 
-    //chazz
-    // let newSelect = svg.select('g').selectAll('.category').selectAll('rect')
-    //     .data(test)
-    // console.log(newSelect)
-    // newSelect
-    //     .attr('x', d => x1(d[0].continent))
-    //     .attr('width', d => x1.bandwidth())
-    //     .attr('y', d => y(d[0].totalValue))
-    //     .attr('height', d => height - y(d[0].totalValue))
-    //     .style('fill', 'black')
+    if (this.value === 'Afrika') {
+        console.log('afrika')
+        d3.select('g').selectAll('rect')
+            .data(newTest)
+            .attr('x', d => x1(newTest))
+            .attr('fill', 'white')
+
+    } else console.log('hee')
 
     let newSelect = svg.select('g').selectAll('.category')
         .data(newTest)
         .attr('class', 'newBar')
-        .attr('x', d => x1(d.continent))
         .attr('y', d => y(d.totalValue))
         .attr('width', x0.bandwidth())
         .attr('height', 0)
         .style('fill', 'red')
+
 
     newSelect.exit().remove()
 }
