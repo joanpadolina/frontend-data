@@ -18,13 +18,40 @@ line {
   stroke-width: .1px;
 }
 
-h1 {
+h1,h2 {
   text-align: center;
   color: #e94e55;
 }
+h1{
+  position: relative;
+  display: block;
+  transform: rotate(-90deg);
+  left: -19em;
+  top: 11em;
+  opacity:.4;
+}
+h2{
+  position: relative;
+  top: -2em;
+
+}
 p{
   text-align: center;
-  margin-bottom:-3em;
+  margin-bottom: -10em;
+  position: relative;
+  top: -3em;
+}
+
+a{
+  color: white;
+  text-decoration:none;
+  background:#e94e55;;
+  padding: .3em;
+  border-radius: .2em;
+  position: relative;
+  left:30em;
+  top: 8em;
+  /* display: block; */
 }
 
 .intro,
@@ -62,6 +89,10 @@ svg{
   margin: 0 auto;
   align-content: center;
   top: 10em;
+  background: linear-gradient(to bottom, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);  
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.45);
+  padding:1em;
+
 }
 
 form{
@@ -73,9 +104,9 @@ select{
   height: 3em;
   display: block;
   position: relative;
-  top: -38em;
+  top: -41em;
   text-align: center;
-  left: 83em;
+  left: 63em;
   font-weight: 900;
   color: #de6363;
   background: white;

@@ -176,11 +176,10 @@ function createVisual(data) {
 
         // dropdown selectie 
         const selectedContinent = this.value
-
-        console.log(selectedContinent)
-
         // nieuwe data opzet 
         let continentUpdate = data.filter(row => row.continent === selectedContinent)
+        let countAllValue = d3.sum(continentUpdate.map(d => d.value))
+
         let beauty = d3.nest()
             .key(d => d.category)
             .key(d => d.continent)
@@ -219,6 +218,12 @@ function createVisual(data) {
             .duration(1300)
             .call(yAxis)
 
+        let selectBody = d3.select('h2')
+     
+            selectBody
+            .transition()
+            .duration(1009)
+            .text(`In ${this.value} zijn er in totaal ${countAllValue} fotomaterialen verzameld`)
 
         // laurens this value
         if (this.value) {
@@ -277,6 +282,7 @@ function createVisual(data) {
                 .transition()
                 .duration(500)
         }
+
 
     }
 
@@ -463,4 +469,6 @@ function createVisual(data) {
             .attr('fill', d => z(d.continent))
         // .attr('width', x1.bandwidth())
     }
+
+
 }
