@@ -5,6 +5,36 @@
 ![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/barchart-gif.gif)
 
 
+`Kloon mijn project`
+
+## gebruikte tools
+
+1. npm
+1. vscode
+1. rollup.js (aangeraden voor het builden van de d3.js)
+
+
+
+## Git clone
+```
+git clone https://github.com/joanpadolina/frontend-data.git
+```
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+
 ## Introductie
 
 Een barchart is te herkennen maar wat kan jij ermee doen? Een goede betekenisvolle animatie/transitie. In dit project ga ik mij bezig houden met de animatie en hoe ik het beste mijn datavisualisatie te laten zien.
@@ -216,36 +246,28 @@ Roy C, Chazz, Manouk, Kim, Robert, Laurens, Deanne
 
 Algemene bronnenlijst waar ik afgelopen weken vaak heb gekeken en gezocht
 
-// voor de data
-
+`voor de data`
 [NMWV](https://collectie.wereldculturen.nl/)
 
-// voor de lokatie
-
+`voor de lokatie`
 [Tropenmuseum Leiden](https://collectie.wereldculturen.nl/?query=search=packages=OnViewRV)
 
-// inspiratie code checkup
-
+`inspiratie code checkup`
 [Bl.org](https://bl.ocks.org/)
 
-// inspirate
-
+`inspirate`
 [Observable](https://observablehq.com/)
 
-// code uitleg d3.js
-
+`code uitleg d3.js`
 [Medium](www.medium.com)
 
-// general debug site (copypaste error)
-
+`general debug site (copypaste error)`
 [Stackoverflow](www.stackoverflow.com)
 
-// basis barchart
-
+`basis barchart`
 [Curran over barchart](https://www.youtube.com/watch?v=NlBt-7PuaLk)
 
-// code gebruikt en hervorm. meer over in de wiki en de index.js
-
+`code gebruikt en hervorm. meer over in de wiki en de index.js`
 [inspiratie1](https://observablehq.com/@d3/grouped-bar-chart)
 [inspiratie2](https://bl.ocks.org/bricedev/0d95074b6d83a77dc3ad)
 
