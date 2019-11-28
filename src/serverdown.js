@@ -337,7 +337,7 @@ let y = d3.scaleLinear()
 
 let z = d3.scaleOrdinal()
     .domain(continentList)
-    .range(["#29A567", "#586BA4", "#ED4D6E", "#FAFFD8", "#AED9E0", "#FECCBA"])
+    .range(["#29A567", "#586BA4", "#ED4D6E", "#AED9E0", "#FECCBA"])
 
 
 let category = g.append('g')
@@ -367,10 +367,10 @@ let rectEnter = rect
 // de chart begint met een groep per category
 let groupBar = () => {
     rectEnter.transition()
-        .duration(500)
-        .delay((d, i) => {
-            return i * 10;
-        })
+        // .duration(500)
+        // .delay((d, i) => {
+        //     return i * 10;
+        // })
         .attr('class', 'group-bar')
         .attr('x', d => x1(d.continent))
         .attr('y', (d) => y(d.totalValue))
@@ -407,10 +407,10 @@ let showAll = d3.select('body')
 function updateData() {
 
 
-    const selectedCountry = this.value
+    const selectedContinent = this.value
 
-    console.log(selectedCountry)
-    let test = data.filter(row => row.continent === selectedCountry)
+    console.log(selectedContinent)
+    let test = data.filter(row => row.continent === selectedContinent)
     let beauty = d3.nest()
         .key(d => d.category)
         .key(d => d.continent)
@@ -440,7 +440,12 @@ function updateData() {
     y
         .domain(d3.extent(beauty.map(d => d.values[0].value)))
         .range([height, 0]);
-        
+
+    z
+        .domain(continentList)
+        .range(["#29A567", "#586BA4", "#ED4D6E", "#AED9E0", "#FECCBA"])
+
+    console.log(z.domain())
     let yAxis = d3.axisLeft(y)
 
     svg.selectAll("g.yaxis")
@@ -448,13 +453,13 @@ function updateData() {
 
 
     if (this.value) {
-        d3.select('g').selectAll('rect')
+        d3.select('g').selectAll('.group-bar')
             .data(beauty)
             .attr('x', d => x0(d.category))
             .attr('y', d => y(d.values[0].value))
             .attr('width', x0.bandwidth())
             .attr('height', d => height - y(d.values[0].value))
-            .attr('fill', d => z(d.continent))
+            .attr('fill', d => z(this.value))
             .exit().remove()
 
     } else groupBar()
@@ -502,6 +507,24 @@ function updateData() {
             .attr('fill', d => z(d.continent))
             .attr('width', x0.bandwidth())
     }
+    //Update all rects
+    svg.selectAll("rect")
+        .data(beauty)
+        .transition()
+        .delay(function (d, i) {
+            return i * 100;
+        })
+        .duration(1000)
+        .ease(d3.easeBounceOut)
+        .attr("y", function (d) {
+            return h - y(d);
+        })
+        .attr("height", function (d) {
+            return y(d);
+        })
+        .attr("fill", function (d) {
+            return "rgb(0,0," + Math.round(d * 10) + ")";
+        });
 
 }
 
@@ -520,7 +543,7 @@ function dropdownChange(value) {
 
 // legenda uit de data
 let continentLegend = (data) => {
-    var legend = g.append("g")
+    let legend = g.append("g")
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
         .attr("text-anchor", "end")
@@ -534,7 +557,7 @@ let continentLegend = (data) => {
 
     legend.append("rect")
         .attr("x", width - 19)
-        .attr("width", 10)
+        .attr("width", 20)
         .attr("height", 19)
         .attr("fill", z);
 
@@ -583,59 +606,59 @@ drawAxis()
 
 
 // van groep naar stacked
-d3.selectAll('input').on('change', change);
+// d3.selectAll('input').on('change', change);
 
 
-let timeout = setTimeout(() => {
-    d3.select('input[value=\'grouped\']').property('checked', true).each(change);
-}, 400);
+// let timeout = setTimeout(() => {
+//     d3.select('input[value=\'grouped\']').property('checked', true).each(change);
+// }, 400);
 
 
-function change() {
-    clearTimeout(timeout);
-    if (this.value === 'grouped') transitionGrouped();
-    else transitionStacked();
-}
+// function change() {
+//     clearTimeout(timeout);
+//     if (this.value === 'grouped') transitionGrouped();
+//     else transitionStacked();
+// }
 
-function transitionGrouped() {
+// function transitionGrouped() {
 
-    rectEnter.transition()
-        .duration(500)
-        .delay((d, i) => {
-            return i * 10;
-        })
-        .attr('x', d => {
-            return x1(d.continent);
-        })
-        .attr('width', x1.bandwidth())
-        .transition()
-        .attr('y', d => {
-            return y(d.totalValue);
-        })
-        .attr('height', d => {
-            return height - y(d.totalValue);
-        });
-}
+//     rectEnter.transition()
+//         .duration(500)
+//         .delay((d, i) => {
+//             return i * 10;
+//         })
+//         .attr('x', d => {
+//             return x1(d.continent);
+//         })
+//         .attr('width', x1.bandwidth())
+//         .transition()
+//         .attr('y', d => {
+//             return y(d.totalValue);
+//         })
+//         .attr('height', d => {
+//             return height - y(d.totalValue);
+//         });
+// }
 
-function transitionStacked() {
+// function transitionStacked() {
 
-    rectEnter.transition()
-        .duration(500)
-        .delay((d, i) => {
-            return i * 10;
-        })
-        .attr('y', d => {
-            return y(d.totalValue);
-        })
-        .attr('height', d => {
-            return height - y(d.totalValue);
-        })
-        .transition()
-        .attr('x', d => {
-            return x0(d.continent);
-        })
-        .attr('width', x0.bandwidth());
-}
+//     rectEnter.transition()
+//         .duration(500)
+//         .delay((d, i) => {
+//             return i * 10;
+//         })
+//         .attr('y', d => {
+//             return y(d.totalValue);
+//         })
+//         .attr('height', d => {
+//             return height - y(d.totalValue);
+//         })
+//         .transition()
+//         .attr('x', d => {
+//             return x0(d.continent);
+//         })
+//         .attr('width', x0.bandwidth());
+// }
 
 // tool tip in de html plaatsen
 let div = d3.select('body').append('div')
@@ -687,80 +710,11 @@ function toolOf(d) {
         .attr('width', x1.bandwidth())
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// console.log(data)
-//select all bars on the graph, take them out, and exit the previous data set. 
-//then you can add/enter the new data set
-// var bars = chart.selectAll('.bar')
-//     .remove()
-//     .exit()
-//     .enter()
-//     .append('g')
-//     .attr('class', 'g')
-//     .attr('transform', function (d) {
-//         return `translate( ${ x0(d.categorie)},0)`
-//     })
-//     .data(data)
-
-// //now actually give each rectangle the corresponding data
-// bars.enter()
-//     .append('rect')
-//     .attr('class', 'bar')
-//     .attr('x', d => xScale(d.category)) // dit geeft de aantaal arrays terug en plaatst het op de xas
-//     .attr('y', function (d) {
-//         // console.log(d)
-//         return yScale(d.value);
-//     })
-//     .attr('height', function (d) {
-//         return height - yScale(d.value);
-//     })
-//     .attr('width', barWidth - 1)
-//     .attr('fill', d => color(colorContinent(d)))
-
-// var xAxis = d3.axisBottom(xScale);
-// var yAxis = d3.axisLeft(yScale);
-// //left axis
-// //set up axes
-// //left axis
-// chart.append('g')
-//     .attr('class', 'y axis')
-//     .call(yAxis)
-//     .selectAll('text')
-
-
-// //bottom axis
-// chart.append('g')
-//     .attr('class', 'xAxis')
-//     .attr('transform', 'translate(0,' + height + ')')
-//     .call(xAxis)
-//     .selectAll('text')
-// // .style('text-anchor', 'end')
-// // .attr('dx', '-.8em')
-// // .attr('dy', '.15em')
-// // .attr('transform', function (d) {
-// //     return 'rotate(-65)';
-// // });
-
-
-// //add labels
-// chart
-//     .append('text')
-//     .attr('transform', 'translate(-35,' + (height + margin.bottom) / 2 + ') rotate(-90)')
-//     .text('% of total watch time');
-
-// chart
-//     .append('text')
-//     .attr('transform', 'translate(' + (width / 2) + ',' + (height + margin.bottom - 5) + ')')
-//     .text('categorie');
+svg.append('text')
+    .append('h1')
+    .attr('class', 'title')
+    .attr('x', 40)
+    .attr('y', -20)
+    .attr('text-anchor', 'middle')
+    .text('A picture is worth a thousand words')
+    .style('fill', '#e94e55')

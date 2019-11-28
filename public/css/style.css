@@ -2,8 +2,9 @@ body {
   font-family: roboto;
   margin: 0;
   padding: 0;
+  background:white;
   /* overflow: hidden; */
-  background: radial-gradient(circle, rgba(78, 82, 88, 1) 0%, rgba(22, 31, 41, 1) 100%);
+  /* background: radial-gradient(circle, rgba(78, 82, 88, 1) 0%, rgba(22, 31, 41, 1) 100%); */
 
 }
 
@@ -19,7 +20,11 @@ line {
 
 h1 {
   text-align: center;
-  color: white;
+  color: #e94e55;
+}
+p{
+  text-align: center;
+  margin-bottom:-3em;
 }
 
 .intro,
@@ -57,4 +62,21 @@ svg{
   margin: 0 auto;
   align-content: center;
   top: 10em;
+}
+
+form{
+  opacity: 0;
+}
+
+select{
+  width: 14em;
+  height: 3em;
+  display: block;
+  position: relative;
+  top: -38em;
+  text-align: center;
+  left: 83em;
+  font-weight: 900;
+  color: #de6363;
+  background: white;
 }
