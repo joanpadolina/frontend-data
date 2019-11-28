@@ -1,5 +1,6 @@
 // Barchart data uit het Nederland Museum van Wereldculturen
 // verschillende foto soorten die beschikbaar zijn in de database. Verzameld per land en vergeleken met elkaar.
+// inpiratie barchart https://observablehq.com/@d3/grouped-bar-chart, https://bl.ocks.org/bricedev/0d95074b6d83a77dc3ad
 
 import queryModule from './modules/queryCode.js'
 
@@ -155,7 +156,7 @@ function createVisual(data) {
             .attr('fill', d => z(d.continent))
         rectEnter.exit().remove()
     }
-    // groupBar.exit().remove()
+
 
     // hier maak ik een dropdown keuze menu van de continenten die in de database staan
     let dropdown = d3.select('body')
@@ -219,7 +220,7 @@ function createVisual(data) {
             .call(yAxis)
 
 
-
+        // laurens this value
         if (this.value) {
             const bars = d3.select('g')
                 .selectAll('.group-bar')
@@ -296,8 +297,9 @@ function createVisual(data) {
     }
 
     // legenda uit de data
+    // https://observablehq.com/@d3/grouped-bar-chart
     let continentLegend = (data) => {
-        var legend = g.append("g")
+        let legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
