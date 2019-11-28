@@ -24,6 +24,7 @@
     }
 
     // Barchart data uit het Nederland Museum van Wereldculturen
+
     const query = queryModule();
     const url = "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-12/sparql";
 
@@ -176,7 +177,7 @@
                 .attr('fill', d => z(d.continent));
             rectEnter.exit().remove();
         };
-        // groupBar.exit().remove()
+
 
         // hier maak ik een dropdown keuze menu van de continenten die in de database staan
         let dropdown = d3.select('body')
@@ -196,11 +197,10 @@
 
             // dropdown selectie 
             const selectedContinent = this.value;
-
-            console.log(selectedContinent);
-
             // nieuwe data opzet 
             let continentUpdate = data.filter(row => row.continent === selectedContinent);
+            let countAllValue = d3.sum(continentUpdate.map(d => d.value));
+
             let beauty = d3.nest()
                 .key(d => d.category)
                 .key(d => d.continent)
@@ -239,8 +239,14 @@
                 .duration(1300)
                 .call(yAxis);
 
+            let selectBody = d3.select('h2');
+         
+                selectBody
+                .transition()
+                .duration(1009)
+                .text(`In ${this.value} zijn er in totaal ${countAllValue} fotomaterialen verzameld`);
 
-
+            // laurens this value
             if (this.value) {
                 const bars = d3.select('g')
                     .selectAll('.group-bar')
@@ -298,14 +304,16 @@
                     .duration(500);
             }
 
+
         }
 
         d3.selectAll('#filter')
             .on('change', updateData);
 
         // legenda uit de data
+        // https://observablehq.com/@d3/grouped-bar-chart
         let continentLegend = (data) => {
-            var legend = g.append("g")
+            let legend = g.append("g")
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10)
                 .attr("text-anchor", "end")
@@ -459,6 +467,8 @@
                 .attr('fill', d => z(d.continent));
             // .attr('width', x1.bandwidth())
         }
+
+
     }
 
 }());
