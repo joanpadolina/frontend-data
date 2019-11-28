@@ -2,6 +2,7 @@
 // verschillende foto soorten die beschikbaar zijn in de database. Verzameld per land en vergeleken met elkaar.
 
 import queryModule from './modules/queryCode.js'
+
 const query = queryModule()
 const url = "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-12/sparql"
 
