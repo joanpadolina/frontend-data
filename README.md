@@ -1,6 +1,6 @@
 # Frontend Data Datavisualisatie D3.js 
 
-# Soorten foto's uit NMVC vormgegeven in een Barchart
+## Soorten foto's uit NMVC vormgegeven in een Barchart
 
 ![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/barchart-gif.gif)
 
@@ -9,7 +9,7 @@
 
 Een barchart is te herkennen maar wat kan jij ermee doen? Een goede betekenisvolle animatie/transitie. In dit project ga ik mij bezig houden met de animatie en hoe ik het beste mijn datavisualisatie te laten zien.
 
-### [Concept](https://joanpadolina.gitbook.io/datavisualization/)
+# [Concept](https://joanpadolina.gitbook.io/datavisualization/)
 
 * A picture is worth a thousand words * 
 
@@ -32,7 +32,7 @@ De barchart laat in principe de collectie zien over de beeldmaterialen met speci
 
 
 
-### [Query proces](https://joanpadolina.gitbook.io/datavisualization/)
+# [Query proces](https://joanpadolina.gitbook.io/datavisualization/)
 
 
 Het ophalen van de data die ik nodig heb bestond eigenlijk al en kon ik dit zo pakken van Ivo. Het ging namelijk om de verschillende type foto's.
@@ -55,7 +55,7 @@ Het ophalen van de data die ik nodig heb bestond eigenlijk al en kon ik dit zo p
 Wat er opgehaald wordt is de `values` die aangegeven. Als dit wordt opgehaald neemt het ook delandnamen en het aantal mee. De data is niet helemaal optimaal en de hoofdletters toevoegen voeg al wat meer resultaten toe. 
 
 
-### [Data verschonen](https://joanpadolina.gitbook.io/datavisualization/)
+# [Data verschonen](https://joanpadolina.gitbook.io/datavisualization/)
 
 De data die ik binnen kreeg was eigenlijk al schoon genoeg om door te geven naar de Barchart. Na het ophalen van de data wilde ik bepaalde types terug krijgen: de waardes van de aantallen en de category. 
 Hier gebruik ik de code van Laurens [basisscript](https://github.com/cmda-tt/course-19-20/blob/master/examples/sparql/baseScript.js) met het ophalen van data en een json terug krijgen.
@@ -72,7 +72,7 @@ De data in de console.log:
 ![json](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/data-json.png)
 
 
-### [D3.js basics](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js basis](https://joanpadolina.gitbook.io/datavisualization/)
 
 Een barchart maken lijkt makkelijk te doen maar dit wat toch een goede oefening om cijfer in beeld te krijgen. Wat ik als eerst gedaan heb ik door simpele data in een barchart te zetten. Ik ben stap voor stap gaan kijken wat er allemaal nodig is voor D3. Hierin ga ik dieper in algemene opzet en specifieke opzet. Bijvoorbeeld margins en d3.select. 
 
@@ -84,7 +84,7 @@ Wat je hier ziet is alleen de categoriën met de totaal aantal per soort. Dit he
 
 
 
-### [D3.nest()](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.nest()](https://joanpadolina.gitbook.io/datavisualization/)
 
 De collectie maakt gebruikt van verschillende soorten typeformat. Soms wordt er een hoofdletter gegeven en soms niet. Dit is dus niet handig voor mijn visualisatie want dan wordt alles dubbel. Om dit te verkomen heb ik gebruik gemaakt van de d3.nest()
 Dit zit al in D3.js en kan dus bereikt worden door iedereen.
@@ -134,7 +134,7 @@ nestedCategory.forEach(i => {
 
 Dit is een oplossing als je vooral niet weet wat keys zijn of hoe het komt dat de data niet wordt meegegeven. Zo behoud je overzicht in de waardes die je op wilt halen. 
 
-### [D3.js inspiratie en aanpassing](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js inspiratie en aanpassing](https://joanpadolina.gitbook.io/datavisualization/)
 
 Om de barchart te maken heb ik verschillende voorbeelden gekeken en met elkaar vergeleken hoe de opzet was. Waar ik vooral naar keek is de opzet van de data en hoe dit wordt meegegeven. Daarnaast zocht ik naar patroon die liet zien dat het belangrijk was voor in de D3 opzet. De naam geeft het eigenlijk al weg. De SVG heeft `groepen` nodig.
 
@@ -191,7 +191,7 @@ De meest gekeken filmpje over barchart zal vast van Curran zijn. [Barchart](http
 
 Om meer te lezen over mijn aanpassing van mijn inspiratie doorloop is verder in mijn [wiki over aanpassingen](https://www.youtube.com/watch?v=NlBt-7PuaLk)
 
-### [D3.js.enter().exit().remove()](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js.enter().exit().remove()](https://joanpadolina.gitbook.io/datavisualization/)
 
 D3 heeft al veel codes geschreven om het werk makkelijker te maken voor programmeurs. Zo zijn er veel domunentatie en voorbeelden te vinden op google. Het enige waar veel nieuwe programmeurs vast gaan lopen is de manier hoe het wordt geschreven. Vaak is er aangegeven dat het JQUERY is of lijkt. Daar heb ik persoonlijk totaal geen ervaring mee en is beginnen eraan net door spijkers lopen.
 
@@ -200,10 +200,12 @@ D3 heeft al veel codes geschreven om het werk makkelijker te maken voor programm
 
 
 
-### [Reflectie](https://joanpadolina.gitbook.io/datavisualization/)
+## [Reflectie](https://joanpadolina.gitbook.io/datavisualization/)
+
+D3.js moet net goed treffen als je beginnend op pro bent. De manier hoe het wordt geschreven heb ik vooral moeite meegehad om te begrijpen. Maar om uiteindelijk tot een werkend datavisualisatie te komen heb ik vooral uren gemaakt in mijn code. Ik heb veel geprobeerd en lang vast gezeten op niet werkende code. Niet werkend vanwege ze versie of omdat het verkeerd is aangegeven. Al deze kleine dingen is crusial en vergt veel energie. Ik lig het verder toe in [mijn wiki](https://bl.ocks.org/bricedev/0d95074b6d83a77dc3ad) en vooral over de valkuilen waar ik toch uit ben gekomen.
 
 
-### [Credits](https://joanpadolina.gitbook.io/datavisualization/)
+### Credits
 
 In dit project heb ik een paar mensen lastig gevallen:
 
