@@ -39,7 +39,7 @@ npm run build
 
 Een barchart is te herkennen maar wat kan jij ermee doen? Een goede betekenisvolle animatie/transitie. In dit project ga ik mij bezig houden met de animatie en hoe ik het beste mijn datavisualisatie te laten zien.
 
-# [Concept](https://joanpadolina.gitbook.io/datavisualization/)
+# [Concept](https://github.com/joanpadolina/frontend-data/wiki/Concept)
 
 * A picture is worth a thousand words * 
 
@@ -62,7 +62,7 @@ De barchart laat in principe de collectie zien over de beeldmaterialen met speci
 
 
 
-# [Query proces](https://joanpadolina.gitbook.io/datavisualization/)
+# [Query proces](https://github.com/joanpadolina/frontend-data/wiki/Data-ophalen-en-opschonen)
 
 
 Het ophalen van de data die ik nodig heb bestond eigenlijk al en kon ik dit zo pakken van Ivo. Het ging namelijk om de verschillende type foto's.
@@ -85,7 +85,7 @@ Het ophalen van de data die ik nodig heb bestond eigenlijk al en kon ik dit zo p
 Wat er opgehaald wordt is de `values` die aangegeven. Als dit wordt opgehaald neemt het ook delandnamen en het aantal mee. De data is niet helemaal optimaal en de hoofdletters toevoegen voeg al wat meer resultaten toe. 
 
 
-# [Data verschonen](https://joanpadolina.gitbook.io/datavisualization/)
+# [Data verschonen](https://github.com/joanpadolina/frontend-data/wiki/D3.nest())
 
 De data die ik binnen kreeg was eigenlijk al schoon genoeg om door te geven naar de Barchart. Na het ophalen van de data wilde ik bepaalde types terug krijgen: de waardes van de aantallen en de category. 
 Hier gebruik ik de code van Laurens [basisscript](https://github.com/cmda-tt/course-19-20/blob/master/examples/sparql/baseScript.js) met het ophalen van data en een json terug krijgen.
@@ -114,7 +114,7 @@ Wat je hier ziet is alleen de categoriën met de totaal aantal per soort. Dit he
 
 
 
-# [D3.nest()](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.nest()](https://github.com/joanpadolina/frontend-data/wiki/D3-barchart)
 
 De collectie maakt gebruikt van verschillende soorten typeformat. Soms wordt er een hoofdletter gegeven en soms niet. Dit is dus niet handig voor mijn visualisatie want dan wordt alles dubbel. Om dit te verkomen heb ik gebruik gemaakt van de d3.nest()
 Dit zit al in D3.js en kan dus bereikt worden door iedereen.
@@ -130,7 +130,7 @@ Dit zit al in D3.js en kan dus bereikt worden door iedereen.
 ```
 Wat D3.nest() doet is eigelijk alles groeperen met dezelfde waardes. In dit geval wordt er "Foto's" en "foto's" opgehaald. Terug naar `data verschonen` is er aangegeven dat de category values `toLowerCase()` moet zijn. Hier is alles gelijk getrokken en kan d3.nest zijn werk doen.
 
-Wat d3.nest() nog meer kan, staat [in mijn wiki](https://joanpadolina.gitbook.io/datavisualization) 
+Wat d3.nest() nog meer kan, staat [in mijn wiki](https://github.com/joanpadolina/frontend-data/wiki/D3-barchart) 
 
 `keys?`
 
@@ -164,7 +164,7 @@ nestedCategory.forEach(i => {
 
 Dit is een oplossing als je vooral niet weet wat keys zijn of hoe het komt dat de data niet wordt meegegeven. Zo behoud je overzicht in de waardes die je op wilt halen. 
 
-# [D3.js inspiratie en aanpassing](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js inspiratie en aanpassing](https://github.com/joanpadolina/frontend-data/wiki/D3-inspiratie-en-aanpassingen)
 
 Om de barchart te maken heb ik verschillende voorbeelden gekeken en met elkaar vergeleken hoe de opzet was. Waar ik vooral naar keek is de opzet van de data en hoe dit wordt meegegeven. Daarnaast zocht ik naar patroon die liet zien dat het belangrijk was voor in de D3 opzet. De naam geeft het eigenlijk al weg. De SVG heeft `groepen` nodig.
 
@@ -221,16 +221,16 @@ De meest gekeken filmpje over barchart zal vast van Curran zijn. [Barchart](http
 
 Om meer te lezen over mijn aanpassing van mijn inspiratie doorloop is verder in mijn [wiki over aanpassingen](https://www.youtube.com/watch?v=NlBt-7PuaLk)
 
-# [D3.js.enter().exit().remove()](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js.enter().exit().remove()](https://github.com/joanpadolina/frontend-data/wiki/D3.enter().update().exit().remove())
 
-D3 heeft al veel codes geschreven om het werk makkelijker te maken voor programmeurs. Zo zijn er veel domunentatie en voorbeelden te vinden op google. Het enige waar veel nieuwe programmeurs vast gaan lopen is de manier hoe het wordt geschreven. Vaak is er aangegeven dat het JQUERY is of lijkt. Daar heb ik persoonlijk totaal geen ervaring mee en is beginnen eraan net door spijkers lopen.
+D3 heeft al veel codes geschreven om het werk makkelijker te maken voor programmeurs. Zo zijn er veel domunentatie en voorbeelden te vinden op google. Het enige waar veel nieuwe programmeurs vast gaan lopen is de manier hoe het wordt geschreven. Vaak is er aangegeven dat het JQUERY is of lijkt. Daar heb ik persoonlijk totaal geen ervaring mee en beginnen eraan is net door spijkers lopen.
 
 **Waar begin ik?**
-[Waar is ze begonnen?](https://joanpadolina.gitbook.io/datavisualization/)
+[Waar is ze begonnen? Lees hier.](https://github.com/joanpadolina/frontend-data/wiki/D3.enter().update().exit().remove())
 
 
 
-## [Reflectie](https://joanpadolina.gitbook.io/datavisualization/)
+## [Reflectie](https://github.com/joanpadolina/frontend-data/wiki/Reflectie)
 
 D3.js moet net goed treffen als je beginnend op pro bent. De manier hoe het wordt geschreven heb ik vooral moeite meegehad om te begrijpen. Maar om uiteindelijk tot een werkend datavisualisatie te komen heb ik vooral uren gemaakt in mijn code. Ik heb veel geprobeerd en lang vast gezeten op niet werkende code. Niet werkend vanwege ze versie of omdat het verkeerd is aangegeven. Al deze kleine dingen is crusial en vergt veel energie. Ik lig het verder toe in [mijn wiki](https://bl.ocks.org/bricedev/0d95074b6d83a77dc3ad) en vooral over de valkuilen waar ik toch uit ben gekomen.
 
@@ -242,7 +242,7 @@ In dit project heb ik een paar mensen lastig gevallen:
 Roy C, Chazz, Manouk, Kim, Robert, Laurens, Deanne
 
 
-### [Bronnenlijst](https://joanpadolina.gitbook.io/datavisualization/)
+### Bronnenlijst
 
 Algemene bronnenlijst waar ik afgelopen weken vaak heb gekeken en gezocht
 
