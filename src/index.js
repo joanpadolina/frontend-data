@@ -218,9 +218,9 @@ function createVisual(data) {
             .duration(1300)
             .call(yAxis)
 
-        let selectBody = d3.select('h2')
+        let chageh2TextToData = d3.select('h2')
      
-            selectBody
+            chageh2TextToData
             .transition()
             .duration(1009)
             .text(`In ${this.value} zijn er in totaal ${countAllValue} fotomaterialen verzameld`)
