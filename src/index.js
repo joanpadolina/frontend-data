@@ -39,10 +39,6 @@ function createVisual(data) {
     }
     let color = colorList()
 
-
-    let yValue = data.map(d => d.value)
-    let xValue = data.map(d => d.category)
-
     let svg = d3.select("svg"),
         margin = {
             top: 20,
@@ -239,7 +235,7 @@ function createVisual(data) {
                 .attr('y', d => y(d.values[0].value))
                 .attr('width', x0.bandwidth())
                 .attr('height', d => height - y(d.values[0].value))
-                .attr('fill', d => z(this.value))
+                .attr('fill', z(this.value))
 
             bars.exit().remove()
 
@@ -249,7 +245,7 @@ function createVisual(data) {
 
         d3.selectAll('rect')
             .on('mouseover', toolOn)
-            .on('mouseexit', toolOf)
+            // .on('mouseexit', toolOf)
 
 
 
@@ -281,7 +277,9 @@ function createVisual(data) {
             d3.select(this)
                 .transition()
                 .duration(500)
+                .attr('fill', 'red')
         }
+
 
 
     }
@@ -435,13 +433,6 @@ function createVisual(data) {
     // functie voor de tooltip
     // https://bl.ocks.org/d3noob/257c360b3650b9f0a52dd8257d7a2d73
 
-    //functie om de kleuren te veranderen
-    function changeColor() {
-        d3.select(this)
-            .transition()
-            .duration(300)
-            .attr('fill', 'orange')
-    }
 
     // wat er gebeurt als je over de rectagles overheen gaat
     function toolOn(d) {
