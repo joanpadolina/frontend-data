@@ -2,7 +2,7 @@
 
 ## Soorten foto's uit NMVC vormgegeven in een Barchart
 
-![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/barchart-gif.gif)
+![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/update-style.gif)
 
 
 `Kloon mijn project`
@@ -102,7 +102,7 @@ De data in de console.log:
 ![json](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/data-json.png)
 
 
-# [D3.js basis](https://joanpadolina.gitbook.io/datavisualization/)
+# [D3.js basis](https://github.com/joanpadolina/frontend-data/wiki/D3-barchart)
 
 Een barchart maken lijkt makkelijk te doen maar dit wat toch een goede oefening om cijfer in beeld te krijgen. Wat ik als eerst gedaan heb ik door simpele data in een barchart te zetten. Ik ben stap voor stap gaan kijken wat er allemaal nodig is voor D3. Hierin ga ik dieper in algemene opzet en specifieke opzet. Bijvoorbeeld margins en d3.select. 
 
@@ -114,7 +114,7 @@ Wat je hier ziet is alleen de categoriën met de totaal aantal per soort. Dit he
 
 
 
-# [D3.nest()](https://github.com/joanpadolina/frontend-data/wiki/D3-barchart)
+# [D3.nest()](https://github.com/joanpadolina/frontend-data/wiki/D3.nest())
 
 De collectie maakt gebruikt van verschillende soorten typeformat. Soms wordt er een hoofdletter gegeven en soms niet. Dit is dus niet handig voor mijn visualisatie want dan wordt alles dubbel. Om dit te verkomen heb ik gebruik gemaakt van de d3.nest()
 Dit zit al in D3.js en kan dus bereikt worden door iedereen.
