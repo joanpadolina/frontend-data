@@ -2,7 +2,7 @@
 
 ## Soorten foto's uit NMVC vormgegeven in een Barchart
 
-![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/update-style.gif)
+![barchart](https://github.com/joanpadolina/frontend-data/blob/master/wiki%20assets/Nov-29-2019%2008-08-41.gif)
 
 
 `Kloon mijn project`
